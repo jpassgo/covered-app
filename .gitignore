@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+
+# Build directory
+dist/
+
+# Log files
+yarn-error.log
+yarn-debug.log
+*.log
+
+# Vite
+.vite/
+vite.config.ts
+
+# Environment variables
+.env
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime*
+*.iml
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Cache directories
+.cache/
+
+# Mac system files
+.DS_Store
+
+# Other files and directories
+*.pem
+*.cert
+

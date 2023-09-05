@@ -4,6 +4,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './Navigation';
 import { Box, Container, CssBaseline, Grid, ThemeProvider, createTheme } from '@mui/material';
 import ReliefMissionCard from './ReliefMissionCard';
+import volcano from '../assets/volcano.jpeg';
+import town from '../assets/town.jpeg';
+import trees from '../assets/trees.jpeg';
 
 const theme = createTheme({
   palette: {
@@ -50,9 +53,9 @@ export function App() {
                 <Grid item xs={12} md={6} paddingTop={'50px'}>
                   <Box sx={{ p: 2 }}>
                     <div>
-                      <ReliefMissionCard />
-                      <ReliefMissionCard />
-                      <ReliefMissionCard />
+                      <ReliefMissionCard title={'Volcano Relief'} description={'Brief explantation of situation goes here'} image={volcano}/>
+                      <ReliefMissionCard title={'Deforestation Relief'} description={'Brief explantation of situation goes here'} image={trees}/>
+                      <ReliefMissionCard title={'Preservation Relief'} description={'Brief explantation of situation goes here'} image={town}/>
                     </div>
                   </Box>
                 </Grid>

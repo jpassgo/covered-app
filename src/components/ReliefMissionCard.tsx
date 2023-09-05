@@ -5,27 +5,34 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import town from '../assets/town.jpeg';
 
-export default function ReliefMissionCard() {
+
+interface ReliefMissionCardProps {
+    title: string;
+    description: string;
+    image: string;
+
+}
+
+export default function ReliefMissionCard({title, description, image}: ReliefMissionCardProps) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={town}
-        title="green iguana"
+        image={image}
+        title={title}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-            Relief Mission Name
+           {title} 
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            Relief Mission Brief Description
+           {description} 
         </Typography>
       </CardContent>
       <CardActions>
+        <Button size="small">Donate</Button>
         <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
   );

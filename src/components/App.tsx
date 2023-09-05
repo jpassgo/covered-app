@@ -1,12 +1,15 @@
 import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './Navigation';
 import { Box, Container, CssBaseline, Grid, ThemeProvider, createTheme } from '@mui/material';
 import ReliefMissionCard from './ReliefMissionCard';
 import volcano from '../assets/volcano.jpeg';
 import town from '../assets/town.jpeg';
 import trees from '../assets/trees.jpeg';
+import DonatePage from './DonatePage';
+import LoginPage from './LoginPage';
+import ProfilePage from './ProfilePage';
 
 const theme = createTheme({
   palette: {
@@ -42,6 +45,12 @@ export function App() {
           <Router>
             <Container>
               <CssBaseline />
+              <Switch>
+                <Route path="/donate" Component={DonatePage} />
+                <Route path="/profile" Component={ProfilePage} />
+                <Route path="/login" Component={LoginPage} />
+              </Switch>
+
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <Box sx={{ p: 2 }}>

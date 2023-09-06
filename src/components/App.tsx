@@ -1,15 +1,13 @@
 import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './Navigation';
 import { Box, Container, CssBaseline, Grid, ThemeProvider, createTheme } from '@mui/material';
-import ReliefMissionCard from './ReliefMissionCard';
-import volcano from '../assets/volcano.jpeg';
-import town from '../assets/town.jpeg';
-import trees from '../assets/trees.jpeg';
+import AuthProvider from './AuthProvider';
 import DonatePage from './DonatePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
+import HomePage from './HomePage';
 
 const theme = createTheme({
   palette: {
@@ -42,35 +40,29 @@ export function App() {
     <ThemeProvider theme={theme}>
       <AppContext.Provider value={{defaultContext}}>
         <LocalizationProvider>
-          <Router>
-            <Container>
-              <CssBaseline />
-              <Switch>
-                <Route path="/donate" Component={DonatePage} />
-                <Route path="/profile" Component={ProfilePage} />
-                <Route path="/login" Component={LoginPage} />
-              </Switch>
-
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <Box sx={{ p: 2 }}>
-                    <div>
-                      <Navigation />
-                    </div>
-                  </Box>
+          <AuthProvider >
+            <Router>
+              <Container>
+                <CssBaseline />
+                <Routes>
+                  <Route path="/" Component={HomePage} />
+                  <Route path="/home" Component={HomePage} />
+                  <Route path="/donate" Component={DonatePage} />
+                  <Route path="/profile" Component={ProfilePage} />
+                  <Route path="/login" Component={LoginPage} />
+                </Routes>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6}>
+                    <Box sx={{ p: 2 }}>
+                      <div>
+                        <Navigation />
+                      </div>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} paddingTop={'50px'}>
-                  <Box sx={{ p: 2 }}>
-                    <div>
-                      <ReliefMissionCard title={'Volcano Relief'} description={'Brief explantation of situation goes here'} image={volcano}/>
-                      <ReliefMissionCard title={'Deforestation Relief'} description={'Brief explantation of situation goes here'} image={trees}/>
-                      <ReliefMissionCard title={'Preservation Relief'} description={'Brief explantation of situation goes here'} image={town}/>
-                    </div>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Container> 
-          </Router>
+              </Container> 
+            </Router>
+          </AuthProvider>
         </LocalizationProvider>
       </AppContext.Provider>
     </ThemeProvider>

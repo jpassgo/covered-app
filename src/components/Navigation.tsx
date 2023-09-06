@@ -19,6 +19,9 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+import '../styles/styles.css';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
@@ -122,13 +125,21 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Donate', 'Profile', 'Login'].map((text) => (
+          {['Donate', 'Profile', 'Home', 'Login'].map((text) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {text === 'Donate' ? <VolunteerActivismIcon /> :  text === 'Profile' ? <AccountBoxIcon /> : <LoginIcon />}
+                  <Link to={"/" + text.toLowerCase()} className="no-underline">
+                    {
+                      text === 'Donate' ? <VolunteerActivismIcon /> : 
+                      text === 'Profile' ? <AccountBoxIcon /> : 
+                      text === 'Home' ? <HomeIcon /> : <LoginIcon />
+                    }
+                  </Link>
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <Link to={"/" + text.toLowerCase()} className="no-underline">
+                  <ListItemText primary={text} />
+                </Link>
               </ListItemButton>
             </ListItem>
           ))}

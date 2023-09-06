@@ -11,29 +11,31 @@ interface ReliefMissionCardProps {
     title: string;
     description: string;
     image: string;
-
+    style?: React.CSSProperties; 
 }
 
-export default function ReliefMissionCard({title, description, image}: ReliefMissionCardProps) {
+export default function ReliefMissionCard({title, description, image, style}: ReliefMissionCardProps) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={image}
-        title={title}
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-           {title} 
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-           {description} 
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Donate</Button>
-        <Button size="small">Share</Button>
-      </CardActions>
-    </Card>
+    <div style={style}>
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia
+          sx={{ height: 140 }}
+          image={image}
+          title={title}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {title} 
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {description} 
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Donate</Button>
+          <Button size="small">Share</Button>
+        </CardActions>
+      </Card>
+    </div>
   );
 }

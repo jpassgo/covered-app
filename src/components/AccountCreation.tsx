@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Button, TextField, Container, Typography } from '@mui/material';
+import { Container, Typography, TextField, Button } from '@mui/material';
 
-const LoginPage: React.FC = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+const AccountCreationPage: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,9 +26,29 @@ const LoginPage: React.FC = () => {
   return (
     <Container>
       <Typography variant="h4" component="h1" gutterBottom>
-        Login
+        Create Account
       </Typography>
       <form onSubmit={handleSubmit}>
+        <TextField
+          label="First Name"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          required
+        />
         <TextField
           label="Email"
           variant="outlined"
@@ -47,11 +72,11 @@ const LoginPage: React.FC = () => {
           required
         />
         <Button variant="contained" color="primary" type="submit">
-          Login
+          Create Account
         </Button>
       </form>
     </Container>
   );
 };
 
-export default LoginPage;
+export default AccountCreationPage;

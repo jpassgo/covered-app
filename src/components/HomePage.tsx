@@ -33,7 +33,7 @@ export default function HomePage({reliefMissions = defaultReliefMissions}: HomeP
     return (
         <Container>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={6} paddingTop={'50px'} marginTop={'50px'}>
+                <Grid item xs={12} md={6} >
                     <Box sx={{ p: 2 }}>
                     <div>
                         {reliefMissions.map((reliefMission) => {
@@ -41,7 +41,6 @@ export default function HomePage({reliefMissions = defaultReliefMissions}: HomeP
                                         title={reliefMission.title} 
                                         description={reliefMission.description} 
                                         image={reliefMission.image} 
-                                        style={{ marginBottom: '16px' }}
                                     />
                         })}
                     </div>

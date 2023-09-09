@@ -8,14 +8,15 @@ import DonatePage from './DonatePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
 import HomePage from './HomePage';
+import AppProvider from './AppContext';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#94A89A', // replace with your primary color
+      main: '#D4D4D4', // replace with your primary color
     },
     secondary: {
-      main: '#373E40', // replace with your secondary color
+      main: '#B7B7A4', // replace with your secondary color
     },
     // ... add other color overrides as needed
   },
@@ -23,48 +24,69 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#797D81',
+          backgroundColor: '#B7B7A4',
+        },
+        'a:link': {
+          color: '#0000EE',  // Color for links that have not been visited
+        },
+        'a:visited': {
+          color: '#551A8B',  // Color for visited links (Change this to any color you want)
         },
       },
     },
   },
 });
 
-const defaultContext = {}
+const defaultContext = {
+  isDrawerOpen: false,
+  toggleDrawer: () => {},
+};
 
 export const AppContext = React.createContext(defaultContext);
 
 export function App() {
 
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(prevState => !prevState);  
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <AppContext.Provider value={{defaultContext}}>
-        <LocalizationProvider>
-          <AuthProvider >
+      <LocalizationProvider>
+        <AuthProvider>
+          <AppProvider>
             <Router>
               <Container>
                 <CssBaseline />
-                <Routes>
-                  <Route path="/" Component={HomePage} />
-                  <Route path="/home" Component={HomePage} />
-                  <Route path="/donate" Component={DonatePage} />
-                  <Route path="/profile" Component={ProfilePage} />
-                  <Route path="/login" Component={LoginPage} />
-                </Routes>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <Box sx={{ p: 2 }}>
                       <div>
-                        <Navigation />
+                        <Navigation/>
                       </div>
                     </Box>
                   </Grid>
                 </Grid>
+                <div style={{ marginTop: '10px' }} onClick={closeDrawer}>
+                  <Routes>
+                    <Route path="/" Component={HomePage} />
+                    <Route path="/home" Component={HomePage} />
+                    <Route path="/donate" Component={DonatePage} />
+                    <Route path="/profile" Component={ProfilePage} />
+                    <Route path="/login" Component={LoginPage} />
+                  </Routes>
+                </div>
               </Container> 
             </Router>
-          </AuthProvider>
-        </LocalizationProvider>
-      </AppContext.Provider>
+          </AppProvider>
+        </AuthProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   )
 }

@@ -1,26 +1,63 @@
-import { useState } from 'react';
-import { Autocomplete } from '@mui/material';
+import { useContext, useState } from 'react';
+import { Autocomplete, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useAppContext } from './AppContext';
+import DonateItemCard from './DonateItemCard';
 
-const CaptureFromCamera = () => {
+const DonatePage = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [selectedItems1, setSelectedItems1] = useState<string[]>([]);
-  const [selectedItems2, setSelectedItems2] = useState<string[]>([]);
+  const [cards, setCards] = useState([{}]);
 
-  const reliefMissions = [
+  const addNewCard = () => {
+    setCards(prev => [...prev, {}]);
+  };
+
+  const context = useAppContext();
+
+  if (!context) {
+    throw new Error('CaptureFromCamera must be used within an AppProvider');
+  }
+
+  const { 
+    reliefMissions, 
+    setReliefMissions, 
+    donatableItems, 
+    setDonatableItems 
+  } = context;
+
+  const reliefMissionsOptions = [
     { label: 'Hurricane Katrina' },
     { label: 'Hawaii Fires' },
   ];
-
-  const donatableItems = [
+  const donatableItemsOptions = [
     { label: 'Tent' },
     { label: 'Shoes' },
     { label: 'Gloves' },
-  ]; 
+  ];
+
+  const handleSelectionChange = (setContextList: React.Dispatch<React.SetStateAction<any[]>>) => 
+  (event: any, newValue: any) => {
+    if (typeof newValue === 'string') {
+      // String input, which means custom input
+      setContextList(prev => [...prev, { label: newValue }]);
+    } else if (newValue && 'inputValue' in newValue) {
+      // Create a new value from the user input
+      setContextList(prev => [...prev, { label: newValue.inputValue }]);
+    } else if (newValue && 'label' in newValue) {
+      // Value from the options, add it to the list
+      setContextList(prev => [...prev, newValue]);
+    }
+  };
+
+  const handleDeleteItem = (contextList: any[], setContextList: React.Dispatch<React.SetStateAction<any[]>>) => 
+  (item: any) => 
+    () => {
+      setContextList(contextList.filter(selectedItem => selectedItem.label !== item.label));
+  };
 
   const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -33,43 +70,23 @@ const CaptureFromCamera = () => {
     }
   };
 
-  const handleSelectionChange = (selectionList: string[], setSelectionList: React.Dispatch<React.SetStateAction<string[]>>) => 
-  (event: any, newValue: any) => {
-    if (typeof newValue === 'string') {
-      // String input, which means custom input
-      setSelectionList([...selectionList, newValue]);
-    } else if (newValue && 'inputValue' in newValue) {
-      // Create a new value from the user input
-      setSelectionList([...selectionList, newValue.inputValue]);
-    } else if (newValue && 'label' in newValue) {
-      // Value from the options
-      setSelectionList([...selectionList, newValue.label]);
-    }
-};
-
-  const handleDeleteItem = (selectionList: string[], setSelectionList: React.Dispatch<React.SetStateAction<string[]>>) => 
-  (item: string) => 
-    () => {
-      setSelectionList(selectionList.filter(selectedItem => selectedItem !== item));
-  };
-
   return (
     <Container>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
-        <Autocomplete
-          freeSolo
-          options={reliefMissions}
-          getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
-          onChange={handleSelectionChange(selectedItems1, setSelectedItems1)}
-          renderInput={(params) => <TextField {...params} label="Relief Missions" variant="outlined" fullWidth />}
-          isOptionEqualToValue={(option, value) => option.label === value.label}
-        />
-          {selectedItems1.map((item, index) => (
+      <Grid item xs={12}>
+          <Autocomplete
+            freeSolo
+            options={reliefMissionsOptions}
+            getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
+            onChange={handleSelectionChange(setReliefMissions)}
+            renderInput={(params) => <TextField {...params} label="Relief Missions" variant="outlined" fullWidth />}
+            isOptionEqualToValue={(option, value) => option.label === value.label}
+          />
+          {reliefMissions.map((item, index) => (
             <Chip
               key={index}
-              label={item}
-              onDelete={handleDeleteItem(selectedItems1, setSelectedItems1)(item)}
+              label={item.label}
+              onDelete={handleDeleteItem(reliefMissions, setReliefMissions)(item)}
               variant="outlined"
               icon={<DeleteIcon />}
               style={{ margin: '0 5px 5px 0' }}
@@ -78,16 +95,16 @@ const CaptureFromCamera = () => {
         </Grid>
         <Grid item xs={12}>
           <Autocomplete
-            options={donatableItems}
+            options={donatableItemsOptions}
             getOptionLabel={(option) => option.label}
-            onChange={handleSelectionChange(selectedItems2, setSelectedItems2)}
+            onChange={handleSelectionChange(setDonatableItems)}
             renderInput={(params) => <TextField {...params} label="Donatable Items" variant="outlined" fullWidth />}
           />
-          {selectedItems2.map((item, index) => (
+          {donatableItems.map((item, index) => (
             <Chip
               key={index}
-              label={item}
-              onDelete={handleDeleteItem(selectedItems2, setSelectedItems2)(item)}
+              label={item.label}
+              onDelete={handleDeleteItem(donatableItems, setDonatableItems)(item)}
               variant="outlined"
               icon={<DeleteIcon />}
               style={{ margin: '0 5px 5px 0' }}
@@ -95,21 +112,14 @@ const CaptureFromCamera = () => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <label style={{ display: 'block', margin: '20px 0', cursor: 'pointer' }}>
-            <span style={{ color: 'blue', textDecoration: 'underline' }}>Select an Image</span>
-            <input 
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handleCapture}
-              style={{ display: 'none' }} // Hide the original input button
-            />
-          </label>
-          {imageSrc && <img src={imageSrc} alt="Captured" style={{ width: '100%', height: 'auto' }} />}
-      </Grid>
+          <Button variant="contained" onClick={addNewCard}>Add Donation</Button>
+          {cards.map((card, index) => (
+            <DonateItemCard key={index} />
+          ))}
+        </Grid>
       </Grid>
     </Container>
   );
 };
 
-export default CaptureFromCamera;
+export default DonatePage;

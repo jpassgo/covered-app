@@ -41,15 +41,23 @@ const DonatePage = () => {
 
   const handleSelectionChange = (setContextList: React.Dispatch<React.SetStateAction<any[]>>) => 
   (event: any, newValue: any) => {
+    let newItem: { label: any; };
     if (typeof newValue === 'string') {
       // String input, which means custom input
-      setContextList(prev => [...prev, { label: newValue }]);
+      newItem = { label: newValue };
+      setContextList(prev => [...prev, newItem]);
     } else if (newValue && 'inputValue' in newValue) {
       // Create a new value from the user input
-      setContextList(prev => [...prev, { label: newValue.inputValue }]);
+      newItem = { label: newValue.inputValue };
+      setContextList(prev => [...prev, newItem]);
     } else if (newValue && 'label' in newValue) {
       // Value from the options, add it to the list
-      setContextList(prev => [...prev, newValue]);
+      newItem = newValue;
+      setContextList(prev => [...prev, newItem]);
+    }
+
+    if (newItem) {
+      setCards(prev => [...prev, { description: newItem.label }]);
     }
   };
 

@@ -72,7 +72,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
-  backgroundColor: '#D4D4D4',
+  backgroundColor: '#495867',
 }));
 
 export default function Navigation() {
@@ -104,7 +104,7 @@ export default function Navigation() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: '#D4D4D4',
+            backgroundColor: '#D3D3D3',
           },
         }}
         variant="persistent"

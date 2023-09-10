@@ -13,7 +13,7 @@ import AppProvider from './AppContext';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#D4D4D4', // replace with your primary color
+      main: '#495867', // replace with your primary color
     },
     secondary: {
       main: '#B7B7A4', // replace with your secondary color
@@ -24,7 +24,7 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: '#B7B7A4',
+          backgroundColor: '#FFFFFF',
         },
         'a:link': {
           color: '#0000EE',  // Color for links that have not been visited

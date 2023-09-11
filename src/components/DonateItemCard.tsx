@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 function DonateItemCard() {
   const [name, setName] = useState('');
   const [dimensions, setDimensions] = useState({ length: '', width: '', height: '' });
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -31,7 +31,8 @@ function DonateItemCard() {
         padding: '10px',
         width: '300px', 
         margin: '10px',
-        paddingRight: ''
+        paddingRight: '25px',
+        paddingBottom: '25px',
       }}>
       
         <Grid item xs={12} style={{ display: 'flex', alignItems: 'center'}}>

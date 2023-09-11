@@ -46,16 +46,6 @@ export const AppContext = React.createContext(defaultContext);
 
 export function App() {
 
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-
-  const toggleDrawer = () => {
-    setIsDrawerOpen(prevState => !prevState);  
-  };
-
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider>
@@ -73,7 +63,7 @@ export function App() {
                     </Box>
                   </Grid>
                 </Grid>
-                <div style={{ marginTop: '10px' }} onClick={closeDrawer}>
+                <div style={{ marginTop: '10px' }} >
                   <Routes>
                     <Route path="/" Component={HomePage} />
                     <Route path="/home" Component={HomePage} />

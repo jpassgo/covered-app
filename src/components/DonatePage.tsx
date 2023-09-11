@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Autocomplete, Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
@@ -9,7 +9,6 @@ import { useAppContext } from './AppContext';
 import DonateItemCard from './DonateItemCard';
 
 const DonatePage = () => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [cards, setCards] = useState([{}]);
 
   const addNewCard = () => {
@@ -40,8 +39,8 @@ const DonatePage = () => {
   ];
 
   const handleSelectionChange = (setContextList: React.Dispatch<React.SetStateAction<any[]>>) => 
-  (event: any, newValue: any) => {
-    let newItem: { label: any; };
+  (newValue: any) => {
+    let newItem: { label: any; } = { label: '' };
     if (typeof newValue === 'string') {
       // String input, which means custom input
       newItem = { label: newValue };
@@ -56,7 +55,7 @@ const DonatePage = () => {
       setContextList(prev => [...prev, newItem]);
     }
 
-    if (newItem) {
+    if (newItem.label) {
       setCards(prev => [...prev, { description: newItem.label }]);
     }
   };
@@ -65,17 +64,6 @@ const DonatePage = () => {
   (item: any) => 
     () => {
       setContextList(contextList.filter(selectedItem => selectedItem.label !== item.label));
-  };
-
-  const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -121,8 +109,8 @@ const DonatePage = () => {
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained" onClick={addNewCard}>Add Donation</Button>
-          {cards.map((card, index) => (
-            <DonateItemCard key={index} />
+          {cards.map(() => (
+            <DonateItemCard />
           ))}
         </Grid>
       </Grid>

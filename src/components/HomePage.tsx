@@ -34,7 +34,7 @@ export default function HomePage({reliefMissions = defaultReliefMissions}: HomeP
         <Container>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6} >
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ p: 2, paddingLeft: '30px'}}>
                     <div>
                         {reliefMissions.map((reliefMission) => {
                             return <ReliefMissionCard 

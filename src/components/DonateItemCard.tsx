@@ -1,13 +1,16 @@
 import { CameraAlt } from '@mui/icons-material';
 import { Button, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
+import { useAppContext } from './AppContext';
 
 function DonateItemCard() {
   const [name, setName] = useState('');
   const [dimensions, setDimensions] = useState({ length: '', width: '', height: '' });
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const { donationItems, setDonationItems } = useAppContext();
+
 
   const onToggleExpansion = () => {
     setIsExpanded(prev => !prev);
@@ -22,6 +25,18 @@ function DonateItemCard() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleDonateItem = () => {
+    const newItem = {
+      title: name,
+      quantity,
+      id: Date.now(), // You might want to replace this with a better unique identifier
+      dimensions,
+      imageSrc
+    };
+
+    setDonationItems(prevItems => [...prevItems, newItem]);
   };
 
   return (
@@ -106,7 +121,7 @@ function DonateItemCard() {
                   style={{ display: 'none' }} // Hide the original input button
                 />
               </label>
-            <Button variant="contained" size="small">Donate Item</Button>
+            <Button variant="contained" size="small" onClick={handleDonateItem}>Donate Item</Button>
           </Grid>
           <Grid item xs={12}>
             {imageSrc && <img src={imageSrc} alt="Captured" style={{ width: '100%', height: 'auto' }} />}

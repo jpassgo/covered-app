@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppContext } from './AppContext';
 import DonateItemCard from './DonateItemCard';
+import DonationItemList from './DonationItemList';
 
 const DonatePage = () => {
   const [cards, setCards] = useState([{}]);
@@ -112,6 +113,9 @@ const DonatePage = () => {
           {cards.map(() => (
             <DonateItemCard />
           ))}
+        </Grid>
+        <Grid item xs={12}>
+          <DonationItemList />
         </Grid>
       </Grid>
     </Container>

@@ -7,7 +7,7 @@ interface DonationItemCardProps {
 }
 
 export default function DonationItemCard({ title, quantity }: DonationItemCardProps) {
-  const { donationItems, setDonationItems } = useAppContext();
+  const { setDonationItems } = useAppContext();
 
   const removeItem = (title: string) => {
     setDonationItems((prevItems) => prevItems.filter((item) => item.title !== title));

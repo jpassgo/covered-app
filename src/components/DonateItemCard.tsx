@@ -9,7 +9,7 @@ function DonateItemCard() {
   const [quantity, setQuantity] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const { donationItems, setDonationItems } = useAppContext();
+  const { setDonationItems } = useAppContext();
 
 
   const onToggleExpansion = () => {

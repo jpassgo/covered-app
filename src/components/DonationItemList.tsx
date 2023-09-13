@@ -2,19 +2,13 @@ import { Button } from "@mui/material";
 import DonationItemCard from "./DonationItemCard"; 
 import { useAppContext } from "./AppContext";
 
-interface DonationItem {
-  title: string;
-  quantity: number;
-  id: number; 
-}
-
 export default function DonationItemList() {
-  const { donationItems, setDonationItems } = useAppContext(); 
+  const { donationItems } = useAppContext(); 
 
 
   const submitItems = async () => {
     try {
-      const response = await fetch("https://api.yourwebsite.com/submit", {
+      await fetch("https://api.yourwebsite.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

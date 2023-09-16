@@ -10,17 +10,20 @@ import DonateItemCard from './DonateItemCard';
 import DonationItemList from './DonationItemList';
 
 const DonatePage = () => {
-  const [cards, setCards] = useState([{}]);
-
-  const addNewCard = () => {
-    setCards(prev => [...prev, {}]);
-  };
-
+  const [pendingDonations, setPendingDonations] = useState<Donation[]>([]);
   const context = useAppContext();
 
-  if (!context) {
-    throw new Error('CaptureFromCamera must be used within an AppProvider');
-  }
+  const addPendingDonation = () => {
+    setPendingDonations(prev => [...prev, {}]);
+  };
+
+  const removePendingDonation = (pendingDonation: Donation) => {
+    setPendingDonations(prev => [...prev.filter(donation => donation !== pendingDonation)]);
+  };
+
+  const handleRemove = (index: number) => {
+    setPendingDonations(prev => prev.filter((_, i) => i !== index));
+  };
 
   const { 
     reliefMissions, 
@@ -57,7 +60,7 @@ const DonatePage = () => {
     }
 
     if (newItem.label) {
-      setCards(prev => [...prev, { description: newItem.label }]);
+      setPendingDonations(prev => [...prev, { description: newItem.label }]);
     }
   };
 
@@ -71,8 +74,7 @@ const DonatePage = () => {
     <Container>
       <Grid container spacing={3}>
       <Grid item xs={12}>
-          <Autocomplete
-            freeSolo
+          <Autocomplete        
             options={reliefMissionsOptions}
             getOptionLabel={(option) => (typeof option === 'string' ? option : option.label)}
             onChange={handleSelectionChange(setReliefMissions)}
@@ -91,7 +93,7 @@ const DonatePage = () => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <Autocomplete
+          <Autocomplete        
             options={donatableItemsOptions}
             getOptionLabel={(option) => option.label}
             onChange={handleSelectionChange(setDonatableItems)}
@@ -109,9 +111,9 @@ const DonatePage = () => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" onClick={addNewCard}>Add Donation</Button>
-          {cards.map(() => (
-            <DonateItemCard />
+          <Button variant="contained" onClick={addPendingDonation}>Add Donation</Button>
+          {pendingDonations.map((item, index: number) => (
+            <DonateItemCard item={item} index={index} onRemove={handleRemove} />
           ))}
         </Grid>
         <Grid item xs={12}>

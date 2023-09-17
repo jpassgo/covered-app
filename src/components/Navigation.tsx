@@ -23,6 +23,7 @@ import '../styles/styles.css';
 import HomeIcon from '@mui/icons-material/Home';
 import { useAppContext } from './AppContext';
 
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{

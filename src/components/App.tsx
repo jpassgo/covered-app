@@ -1,4 +1,3 @@
-import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Navigation from './Navigation';
@@ -8,7 +7,9 @@ import DonatePage from './DonatePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
 import HomePage from './HomePage';
-import AppProvider from './AppContext';
+import AppProvider, { useAppContext } from './AppContext';
+import { useRef, useEffect } from 'react';
+
 
 const theme = createTheme({
   palette: {
@@ -37,14 +38,26 @@ const theme = createTheme({
   },
 });
 
-const defaultContext = {
-  isDrawerOpen: false,
-  toggleDrawer: () => {},
-};
+const drawerRef = useRef<HTMLDivElement | null>(null);
 
-export const AppContext = React.createContext(defaultContext);
 
 export function App() {
+
+  const { toggleDrawer } = useAppContext();
+
+  const handleClick = (event: any) => {
+    if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+      toggleDrawer(); // function to close the drawer, get it from context
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+  
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,7 +76,7 @@ export function App() {
                     </Box>
                   </Grid>
                 </Grid>
-                <div style={{ marginTop: '10px' }} >
+                <div style={{ marginTop: '10px' }} ref={drawerRef}>
                   <Routes>
                     <Route path="/" Component={HomePage} />
                     <Route path="/home" Component={HomePage} />

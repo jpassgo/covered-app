@@ -3,7 +3,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { useAppContext } from './AppContext';
 
-function DonateItemCard({ donation, index, onRemove }: { donation: Donation, index: number, onRemove: (index: number) => void }) {
+function DonateItemCard({ index, onRemove }: { donation: Donation, index: number, onRemove: (index: number) => void }) {
   const [name, setName] = useState('');
   const [dimensions, setDimensions] = useState({ length: '', width: '', height: '' });
   const [quantity, setQuantity] = useState<number>(1);
@@ -13,6 +13,7 @@ function DonateItemCard({ donation, index, onRemove }: { donation: Donation, ind
 
 
   const onToggleExpansion = () => {
+    
     setIsExpanded(prev => !prev);
   }
 

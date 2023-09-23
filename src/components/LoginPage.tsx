@@ -21,9 +21,7 @@ const LoginPage: React.FC = () => {
   return (
     <Container>
       <Grid item container spacing={2}>
-        <Grid item xs={12}>
-          
-        </Grid>
+        <Grid item xs={12}></Grid>
         <Grid item xs={12}>
           <Typography variant="h4" component="h1" gutterBottom>
             Login
@@ -43,7 +41,7 @@ const LoginPage: React.FC = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField  
+              <TextField
                 label="Password"
                 variant="outlined"
                 margin="normal"
@@ -55,7 +53,7 @@ const LoginPage: React.FC = () => {
                 required
               />
             </Grid>
-            <Grid item xs={4} style={{ marginTop: "10px"}}>
+            <Grid item xs={4} style={{ marginTop: '10px' }}>
               <Button variant="contained" color="primary" type="submit">
                 Login
               </Button>

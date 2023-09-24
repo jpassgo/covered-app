@@ -5,27 +5,8 @@ import HomePage from './HomePage';
 import DonatePage from './DonatePage';
 import ProfilePage from './ProfilePage';
 import LoginPage from './LoginPage';
-import { useRef, useEffect } from 'react';
-import { useAppContext } from './AppContext';
 
 export default function Navigation() {
-  const drawerRef = useRef<HTMLDivElement | null>(null);
-
-  const { toggleDrawer } = useAppContext();
-
-  const handleClick = (event: MouseEvent) => {
-    if (drawerRef.current && event.target instanceof Node && !drawerRef.current.contains(event.target)) {
-        toggleDrawer(false); // function to close the drawer, get it from context
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
 
   return (
     <Router>
@@ -40,7 +21,7 @@ export default function Navigation() {
             </Box>
           </Grid>
         </Grid>
-        <div style={{ marginTop: '10px' }} ref={drawerRef}>
+        <div style={{ marginTop: '10px' }}>
           <Routes>
             <Route path="/" Component={HomePage} />
             <Route path="/home" Component={HomePage} />

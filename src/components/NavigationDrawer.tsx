@@ -22,6 +22,7 @@ import { Link } from 'react-router-dom';
 import '../styles/styles.css';
 import HomeIcon from '@mui/icons-material/Home';
 import { useAppContext } from './AppContext';
+import { useEffect, useRef } from 'react';
 
 const drawerWidth = 240;
 
@@ -77,6 +78,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function NavigationDrawer() {
   const theme = useTheme();
+
   const { isDrawerOpen, setIsDrawerOpen } = useAppContext();
 
   return (
@@ -106,7 +108,7 @@ export default function NavigationDrawer() {
             backgroundColor: '#D3D3D3',
           },
         }}
-        variant="persistent"
+        variant="temporary"
         anchor="left"
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

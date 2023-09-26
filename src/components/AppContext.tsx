@@ -6,6 +6,9 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react';
+import volcano from '../assets/volcano.jpeg';
+import town from '../assets/town.jpeg';
+import trees from '../assets/trees.jpeg';
 
 interface DonationItem {
   title: string;
@@ -31,8 +34,32 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+
+  const defaultReliefMissions = [
+    {
+      title: 'Volcano Relief',
+      description:
+        'Help the people of St. Vincent and the Grenadines recover from the La Soufrière volcanic eruption.',
+      image: volcano,
+      neededItems: [ 'Water', 'Food', 'Shovel' ],
+    },
+    {
+      title: 'Tornado Relief',
+      description:
+        'Help the people of Nashville, Tennessee recover from the March 2020 tornado.',
+      image: town,
+      neededItems: [ 'Water', 'Food', 'Tent' ],
+    },
+    {
+      title: 'Wildfire Relief',
+      description:
+        'Help the people of California recover from the 2020 wildfires.',
+      image: trees,
+      neededItems: [ 'Water', 'Food', 'Clothing', 'Tent', 'Shovel', 'Gloves' ],
+    },
+  ];
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [reliefMissions, setReliefMissions] = useState<any[]>([]);
+  const [reliefMissions, setReliefMissions] = useState<any[]>(defaultReliefMissions);
   const [donatableItems, setDonatableItems] = useState<any[]>([]);
   const [donationItems, setDonationItems] = useState<DonationItem[]>([]); 
 

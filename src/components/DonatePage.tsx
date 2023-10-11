@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppContext } from './AppContext';
 import ReliefMissionCard from './ReliefMissionCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 
@@ -16,6 +16,7 @@ const reliefMissionsOptions = [
   { label: 'Tornado Relief' },
   { label: 'Wildfire Relief'}
 ];
+
 const donatableItemsOptions = [
   { label: 'Tent' },
   { label: 'Shoes' },
@@ -31,50 +32,41 @@ const DonatePage = () => {
 
   const {
     reliefMissions,
-    donatableItems,
+    // donatableItems,
   } = context;
 
-  const [selectedReliefMissions, setSelectedReliefMissions] = useState(reliefMissions);
-  const [selectedDonatableItems, setSelectedDonatableItems] = useState(donatableItems);
-  
-  const handleSelectionChange =
-    (
-      setSelection: React.Dispatch<React.SetStateAction<any[]>>,
-    ) =>
-    (newValue: any) => {
-      let newItem: { label: any } = { label: '' };
-      if (typeof newValue === 'string') {
-        // String input, which means custom input
-        newItem = { label: newValue };
-        setSelection((prev) => [...prev, newItem]);
-      } else if (newValue && 'inputValue' in newValue) {
-        // Create a new value from the user input
-        newItem = { label: newValue.inputValue };
-        setSelection((prev) => [...prev, newItem]);
-      } else if (newValue && 'label' in newValue) {
-        // Value from the options, add it to the list
-        newItem = newValue;
-        setSelection((prev) => [...prev, newItem]);
-      }
-    };
+  const [selectedReliefMissions, setSelectedReliefMissions] = useState<Array<{ label: string }>>([]);
+  const [selectedDonatableItems, setSelectedDonatableItems] = useState<Array<{ label: string }>>([]);
+  const [filteredMissions, setFilteredMissions] = useState<Array<{ label: string }>>([]);
 
-    const handleDeleteItem = (
-      item: any,
-      selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>
-    ) => () => {
-      selectedItemsListState((prev) =>
-        prev.filter((selectedItem) => selectedItem.label !== item.label)
-      );
-    };
   
-    const filteredMissions = reliefMissions.filter((mission: any) => {
-      const missionItems = mission.neededItems;
-  
-      // Check if the mission contains all selected donatable items
-      return selectedDonatableItems.every((item: string) => missionItems.includes(item));
+  const handleSelectionChange = (setSelection: any) => (_: any, newValue: any) => {
+    if (newValue) {
+      // Check if newValue is defined
+      const newItem = { label: newValue.label };
+      setSelection((prev: any) => [...prev, newItem]);
+    }
+  };
+
+  const handleDeleteItem = (
+    item: any,
+    selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>
+  ) => () => {
+    selectedItemsListState((prev) =>
+      prev.filter((selectedItem) => selectedItem.label !== item.label)
+    );
+  };
+
+  useEffect(() => {
+    const newFilteredMissions = reliefMissions.filter((mission: any) => {
+      if (selectedDonatableItems.length === 0) return true;
+      return selectedDonatableItems.some((item: any) => mission.neededItems.includes(item.label));
     }).filter((mission: any) => {
+      if (selectedReliefMissions.length === 0) return true;
       return selectedReliefMissions.some((item: any) => mission.title === item.label);
     });
+    setFilteredMissions(newFilteredMissions);
+  }, [selectedDonatableItems, selectedReliefMissions]);
 
   return (
     <Container>
@@ -82,10 +74,7 @@ const DonatePage = () => {
         <Grid item xs={12}>
         <Autocomplete
             options={reliefMissionsOptions}
-            getOptionLabel={option =>
-              typeof option === 'string' ? option : option.label
-            }
-            value={selectedReliefMissions}
+            getOptionLabel={(option) => option.label}
             onChange={handleSelectionChange(setSelectedReliefMissions)}
             renderInput={params => (
               <TextField
@@ -95,9 +84,6 @@ const DonatePage = () => {
                 fullWidth
               />
             )}
-            isOptionEqualToValue={(option, value) =>
-              option.label === value.label
-            }
           />
           {selectedReliefMissions.map((item, index) => (
            <Chip
@@ -113,8 +99,7 @@ const DonatePage = () => {
         <Grid item xs={12}>
         <Autocomplete
             options={donatableItemsOptions}
-            getOptionLabel={option => option.label}
-            value={selectedDonatableItems}
+            getOptionLabel={(option) => option.label}
             onChange={handleSelectionChange(setSelectedDonatableItems)}
             renderInput={params => (
               <TextField

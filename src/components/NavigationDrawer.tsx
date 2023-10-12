@@ -81,6 +81,13 @@ export default function NavigationDrawer() {
 
   const { isDrawerOpen, setIsDrawerOpen } = useAppContext();
 
+  const routeMap: { [key: string]: string } = {
+    'Donate': 'findMission',
+    'Profile': 'profile',
+    'Home': 'home',
+    'Login': 'login',
+  }; 
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -135,7 +142,7 @@ export default function NavigationDrawer() {
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <Link to={'/' + text.toLowerCase()} className="no-underline">
+                  <Link to={'/' + routeMap[text]} className="no-underline">
                     {text === 'Donate' ? (
                       <VolunteerActivismIcon />
                     ) : text === 'Profile' ? (
@@ -147,7 +154,7 @@ export default function NavigationDrawer() {
                     )}
                   </Link>
                 </ListItemIcon>
-                <Link to={'/' + text.toLowerCase()} className="no-underline">
+                <Link to={'/' + routeMap[text]} className="no-underline" onClick={() => setIsDrawerOpen(false)}>
                   <ListItemText primary={text} />
                 </Link>
               </ListItemButton>

@@ -1,9 +1,9 @@
 import { Container, Grid, Box } from '@mui/material';
-import ReliefMission from '../models/ReliefMission';
-import ReliefMissionCard from './ReliefMissionCard';
-import volcano from '../assets/volcano.jpeg';
-import town from '../assets/town.jpeg';
-import trees from '../assets/trees.jpeg';
+import ReliefMission from '../../models/ReliefMission';
+import ReliefMissionCard from '../ReliefMissionCard';
+import volcano from '../../assets/volcano.jpeg';
+import town from '../../assets/town.jpeg';
+import trees from '../../assets/trees.jpeg';
 
 interface HomePageProps {
   reliefMissions?: ReliefMission[];

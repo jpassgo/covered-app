@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Typography, Avatar, Grid, Box } from '@mui/material';
-import Keanu from '../assets/keanu.jpeg';
+import Keanu from '../../assets/keanu.jpeg';
 import EmailIcon from '@mui/icons-material/Email';
 import InfoIcon from '@mui/icons-material/Info';
 

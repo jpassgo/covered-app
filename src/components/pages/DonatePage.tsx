@@ -5,8 +5,8 @@ import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppContext } from './AppContext';
-import ReliefMissionCard from './ReliefMissionCard';
+import { useAppContext } from '../AppContext';
+import ReliefMissionCard from '../ReliefMissionCard';
 import { useEffect, useState } from 'react';
 
 

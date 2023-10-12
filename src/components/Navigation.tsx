@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavigationDrawer from './NavigationDrawer';
 import { Box, Container, CssBaseline, Grid } from '@mui/material';
-import HomePage from './HomePage';
-import DonatePage from './DonatePage';
-import ProfilePage from './ProfilePage';
-import LoginPage from './LoginPage';
+import HomePage from './pages/HomePage';
+import DonatePage from './pages/DonatePage';
+import ProfilePage from './pages/ProfilePage';
+import LoginPage from './pages/LoginPage';
 
 export default function Navigation() {
 
@@ -25,7 +25,7 @@ export default function Navigation() {
           <Routes>
             <Route path="/" Component={HomePage} />
             <Route path="/home" Component={HomePage} />
-            <Route path="/donate" Component={DonatePage} />
+            <Route path="/findMission" Component={DonatePage} />
             <Route path="/profile" Component={ProfilePage} />
             <Route path="/login" Component={LoginPage} />
           </Routes>

@@ -1,13 +1,39 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 import { Typography, Container, Grid, Card, CardMedia, Autocomplete, Chip, TextField } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useAppContext } from '../AppContext';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const SubmitDonationPage: React.FC = () => {
   const { id } = useParams();
   const { reliefMissions } = useAppContext();
 
   const mission = reliefMissions.find((mission) => mission.id === Number(id));
+
+  const [selectedDonatableItems, setSelectedDonatableItems] = useState<
+  Array<{ label: string }>
+>([]);
+
+const handleSelectionChange =
+(setSelection: any) => (_: any, newValue: any) => {
+  if (newValue) {
+    // Check if newValue is defined
+    const newItem = { label: newValue.label };
+    setSelection((prev: any) => [...prev, newItem]);
+  }
+};
+
+const handleDeleteItem =
+(
+  item: any,
+  selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>,
+) =>
+() => {
+  selectedItemsListState(prev =>
+    prev.filter(selectedItem => selectedItem.label !== item.label),
+  );
+};
 
   return (
     <Container>
@@ -30,7 +56,7 @@ const SubmitDonationPage: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Autocomplete
-            options={donatableItemsOptions}
+            options={mission.neededItems.map((item: any) => ({ label: item }))}
             getOptionLabel={option => option.label}
             onChange={handleSelectionChange(setSelectedDonatableItems)}
             renderInput={params => (
@@ -53,7 +79,6 @@ const SubmitDonationPage: React.FC = () => {
             />
           ))}
         </Grid>
-        {/* Add donation form or other content related to the "Donate" page */}
       </Grid>
     </Container>
   );

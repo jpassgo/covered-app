@@ -82,11 +82,11 @@ export default function NavigationDrawer() {
   const { isDrawerOpen, setIsDrawerOpen } = useAppContext();
 
   const routeMap: { [key: string]: string } = {
-    'Donate': 'findMission',
-    'Profile': 'profile',
-    'Home': 'home',
-    'Login': 'login',
-  }; 
+    Donate: 'findMission',
+    Profile: 'profile',
+    Home: 'home',
+    Login: 'login',
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -154,7 +154,11 @@ export default function NavigationDrawer() {
                     )}
                   </Link>
                 </ListItemIcon>
-                <Link to={'/' + routeMap[text]} className="no-underline" onClick={() => setIsDrawerOpen(false)}>
+                <Link
+                  to={'/' + routeMap[text]}
+                  className="no-underline"
+                  onClick={() => setIsDrawerOpen(false)}
+                >
                   <ListItemText primary={text} />
                 </Link>
               </ListItemButton>

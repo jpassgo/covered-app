@@ -11,12 +11,14 @@ interface ReliefMissionCardProps {
   title: string;
   description: string;
   image: string;
+  id: number;
 }
 
 export default function ReliefMissionCard({
   title,
   description,
   image,
+  id,
 }: ReliefMissionCardProps) {
   return (
     <Grid container spacing={2} alignItems="center">
@@ -42,7 +44,7 @@ export default function ReliefMissionCard({
               </Typography>
             </CardContent>
             <CardActions>
-              <Link to={'/donate'} className="no-underline">
+              <Link to={`/mission/${id}`} className="no-underline">
                 <Button
                   size="small"
                   style={{

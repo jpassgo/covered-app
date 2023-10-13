@@ -5,9 +5,9 @@ import HomePage from './pages/HomePage';
 import DonatePage from './pages/DonatePage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
+import SubmitDonationPage from './pages/SubmitDonationPage';
 
 export default function Navigation() {
-
   return (
     <Router>
       <Container>
@@ -28,6 +28,10 @@ export default function Navigation() {
             <Route path="/findMission" Component={DonatePage} />
             <Route path="/profile" Component={ProfilePage} />
             <Route path="/login" Component={LoginPage} />
+            <Route
+              path="/mission/:id"
+              element={<SubmitDonationPage />}
+            />
           </Routes>
         </div>
       </Container>

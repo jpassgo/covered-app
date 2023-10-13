@@ -34,34 +34,38 @@ interface AppProviderProps {
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-
   const defaultReliefMissions = [
     {
       title: 'Volcano Relief',
       description:
         'Help the people of St. Vincent and the Grenadines recover from the La Soufrière volcanic eruption.',
       image: volcano,
-      neededItems: [ 'Water', 'Food', 'Shovel' ],
+      neededItems: ['Water', 'Food', 'Shovel'],
+      id: 1,
     },
     {
       title: 'Tornado Relief',
       description:
         'Help the people of Nashville, Tennessee recover from the March 2020 tornado.',
       image: town,
-      neededItems: [ 'Water', 'Food', 'Tent' ],
+      neededItems: ['Water', 'Food', 'Tent'],
+      id: 2,
     },
     {
       title: 'Wildfire Relief',
       description:
         'Help the people of California recover from the 2020 wildfires.',
       image: trees,
-      neededItems: [ 'Water', 'Food', 'Clothing', 'Tent', 'Shovel', 'Gloves' ],
+      neededItems: ['Water', 'Food', 'Clothing', 'Tent', 'Shovel', 'Gloves'],
+      id: 3,
     },
   ];
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [reliefMissions, setReliefMissions] = useState<any[]>(defaultReliefMissions);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [reliefMissions, setReliefMissions] = useState<any[]>(
+    defaultReliefMissions,
+  );
   const [donatableItems, setDonatableItems] = useState<any[]>([]);
-  const [donationItems, setDonationItems] = useState<DonationItem[]>([]); 
+  const [donationItems, setDonationItems] = useState<DonationItem[]>([]);
 
   useEffect(() => {
     localStorage.setItem(
@@ -72,7 +76,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         donatableItems,
         donationItems,
       }),
-    ); 
+    );
   }, [isDrawerOpen, reliefMissions, donatableItems, donationItems]);
 
   return (

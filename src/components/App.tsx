@@ -4,7 +4,6 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import AuthProvider from './AuthProvider';
 import AppProvider from './AppContext';
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -22,10 +21,10 @@ const theme = createTheme({
           backgroundColor: '#FFFFFF',
         },
         'a:link': {
-          color: '#0000EE',  // Color for links that have not been visited
+          color: '#0000EE', // Color for links that have not been visited
         },
         'a:visited': {
-          color: '#551A8B',  // Color for visited links (Change this to any color you want)
+          color: '#551A8B', // Color for visited links (Change this to any color you want)
         },
       },
     },
@@ -33,7 +32,6 @@ const theme = createTheme({
 });
 
 export function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider>
@@ -44,5 +42,5 @@ export function App() {
         </AuthProvider>
       </LocalizationProvider>
     </ThemeProvider>
-  )
+  );
 }

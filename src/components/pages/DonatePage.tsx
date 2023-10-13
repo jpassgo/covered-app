@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Autocomplete, Box  } from '@mui/material';
+import { Autocomplete, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import Grid from '@mui/material/Grid';
@@ -9,12 +9,10 @@ import { useAppContext } from '../AppContext';
 import ReliefMissionCard from '../ReliefMissionCard';
 import { useEffect, useState } from 'react';
 
-
-
 const reliefMissionsOptions = [
   { label: 'Volcano Relief' },
   { label: 'Tornado Relief' },
-  { label: 'Wildfire Relief'}
+  { label: 'Wildfire Relief' },
 ];
 
 const donatableItemsOptions = [
@@ -35,36 +33,50 @@ const DonatePage = () => {
     // donatableItems,
   } = context;
 
-  const [selectedReliefMissions, setSelectedReliefMissions] = useState<Array<{ label: string }>>([]);
-  const [selectedDonatableItems, setSelectedDonatableItems] = useState<Array<{ label: string }>>([]);
-  const [filteredMissions, setFilteredMissions] = useState<Array<{ label: string }>>([]);
+  const [selectedReliefMissions, setSelectedReliefMissions] = useState<
+    Array<{ label: string }>
+  >([]);
+  const [selectedDonatableItems, setSelectedDonatableItems] = useState<
+    Array<{ label: string }>
+  >([]);
+  const [filteredMissions, setFilteredMissions] = useState<
+    Array<{ label: string }>
+  >([]);
 
-  
-  const handleSelectionChange = (setSelection: any) => (_: any, newValue: any) => {
-    if (newValue) {
-      // Check if newValue is defined
-      const newItem = { label: newValue.label };
-      setSelection((prev: any) => [...prev, newItem]);
-    }
-  };
+  const handleSelectionChange =
+    (setSelection: any) => (_: any, newValue: any) => {
+      if (newValue) {
+        // Check if newValue is defined
+        const newItem = { label: newValue.label };
+        setSelection((prev: any) => [...prev, newItem]);
+      }
+    };
 
-  const handleDeleteItem = (
-    item: any,
-    selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>
-  ) => () => {
-    selectedItemsListState((prev) =>
-      prev.filter((selectedItem) => selectedItem.label !== item.label)
-    );
-  };
+  const handleDeleteItem =
+    (
+      item: any,
+      selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>,
+    ) =>
+    () => {
+      selectedItemsListState(prev =>
+        prev.filter(selectedItem => selectedItem.label !== item.label),
+      );
+    };
 
   useEffect(() => {
-    const newFilteredMissions = reliefMissions.filter((mission: any) => {
-      if (selectedDonatableItems.length === 0) return true;
-      return selectedDonatableItems.some((item: any) => mission.neededItems.includes(item.label));
-    }).filter((mission: any) => {
-      if (selectedReliefMissions.length === 0) return true;
-      return selectedReliefMissions.some((item: any) => mission.title === item.label);
-    });
+    const newFilteredMissions = reliefMissions
+      .filter((mission: any) => {
+        if (selectedDonatableItems.length === 0) return true;
+        return selectedDonatableItems.some((item: any) =>
+          mission.neededItems.includes(item.label),
+        );
+      })
+      .filter((mission: any) => {
+        if (selectedReliefMissions.length === 0) return true;
+        return selectedReliefMissions.some(
+          (item: any) => mission.title === item.label,
+        );
+      });
     setFilteredMissions(newFilteredMissions);
   }, [selectedDonatableItems, selectedReliefMissions]);
 
@@ -72,9 +84,9 @@ const DonatePage = () => {
     <Container>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-        <Autocomplete
+          <Autocomplete
             options={reliefMissionsOptions}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={option => option.label}
             onChange={handleSelectionChange(setSelectedReliefMissions)}
             renderInput={params => (
               <TextField
@@ -86,20 +98,20 @@ const DonatePage = () => {
             )}
           />
           {selectedReliefMissions.map((item, index) => (
-           <Chip
-           key={index}
-           label={item.label}
-           onDelete={handleDeleteItem(item, setSelectedReliefMissions)}
-           variant="outlined"
-           icon={<DeleteIcon />}
-           style={{ margin: '0 5px 5px 0' }}
-         />
+            <Chip
+              key={index}
+              label={item.label}
+              onDelete={handleDeleteItem(item, setSelectedReliefMissions)}
+              variant="outlined"
+              icon={<DeleteIcon />}
+              style={{ margin: '0 5px 5px 0' }}
+            />
           ))}
         </Grid>
         <Grid item xs={12}>
-        <Autocomplete
+          <Autocomplete
             options={donatableItemsOptions}
-            getOptionLabel={(option) => option.label}
+            getOptionLabel={option => option.label}
             onChange={handleSelectionChange(setSelectedDonatableItems)}
             renderInput={params => (
               <TextField
@@ -112,13 +124,13 @@ const DonatePage = () => {
           />
           {selectedDonatableItems.map((item, index) => (
             <Chip
-            key={index}
-            label={item.label}
-            onDelete={handleDeleteItem(item, setSelectedDonatableItems)}
-            variant="outlined"
-            icon={<DeleteIcon />}
-            style={{ margin: '0 5px 5px 0' }}
-          />
+              key={index}
+              label={item.label}
+              onDelete={handleDeleteItem(item, setSelectedDonatableItems)}
+              variant="outlined"
+              icon={<DeleteIcon />}
+              style={{ margin: '0 5px 5px 0' }}
+            />
           ))}
         </Grid>
         <Grid item xs={12}>
@@ -129,26 +141,12 @@ const DonatePage = () => {
                   title={mission.title}
                   description={mission.description}
                   image={mission.image}
+                  id={mission.id}
                 />
               ))}
             </Grid>
           </Box>
         </Grid>
-        {/* <Grid item xs={12}>
-          <Button variant="contained" onClick={addPendingDonation}>
-            Add Donation
-          </Button>
-          {pendingDonations.map((item, index: number) => (
-            <DonateItemCard
-              donation={item}
-              index={index}
-              onRemove={handleRemove}
-            />
-          ))}
-        </Grid>
-        <Grid item xs={12}>
-          <DonationItemList />
-        </Grid> */}
       </Grid>
     </Container>
   );

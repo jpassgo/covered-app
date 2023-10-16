@@ -10,7 +10,7 @@ class ReliefMission {
     description: string,
     image: string,
     neededItems: string[] = [],
-    id: number = 0
+    id: number = 0,
   ) {
     this.title = title;
     this.description = description;

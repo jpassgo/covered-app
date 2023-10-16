@@ -28,10 +28,7 @@ export default function Navigation() {
             <Route path="/findMission" Component={DonatePage} />
             <Route path="/profile" Component={ProfilePage} />
             <Route path="/login" Component={LoginPage} />
-            <Route
-              path="/mission/:id"
-              element={<SubmitDonationPage />}
-            />
+            <Route path="/mission/:id" element={<SubmitDonationPage />} />
           </Routes>
         </div>
       </Container>

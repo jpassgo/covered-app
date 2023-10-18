@@ -27,6 +27,7 @@ const SubmitDonationPage: React.FC = () => {
   const [donationQuantities, setDonationQuantities] = useState<any[]>([]);
   const [donationConditions, setDonationConditions] = useState<any[]>([]);
   const [donationValues, setDonationValues] = useState<any[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const [selectedDonatableItems, setSelectedDonatableItems] = useState<
     Array<{ label: string }>
   >([]);
@@ -51,7 +52,7 @@ const SubmitDonationPage: React.FC = () => {
       );
     };
 
-  const handleDonationEdit = (
+  const handleDonationEditInternal = (
     item: any,
     index: number,
     selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>,
@@ -69,6 +70,26 @@ const SubmitDonationPage: React.FC = () => {
 
       return updatedList;
     });
+  };
+
+  const handleDonationEdit =
+    (
+      item: any,
+      index: number,
+      selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>,
+    ) =>
+    (event: { target: { value: any } }) => {
+      // Rest of your logic
+      handleDonationEditInternal(item, index, selectedItemsListState);
+    };
+
+  const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+      const selectedImage = URL.createObjectURL(fileInput.files[0]);
+      setSelectedImage(selectedImage);
+    }
   };
 
   const handleDonationSubmit = () => {};
@@ -119,7 +140,7 @@ const SubmitDonationPage: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           {selectedDonatableItems.map((item, index) => (
-            <Card sx={{ minWidth: 275 }}>
+            <Card sx={{ minWidth: 275, margin: '16px 0' }}>
               <CardContent>
                 <Typography
                   sx={{ fontSize: 14 }}
@@ -128,46 +149,92 @@ const SubmitDonationPage: React.FC = () => {
                 >
                   {item.label}
                 </Typography>
-                <TextField
-                  id="standard-basic"
-                  label="Brand/Description"
-                  variant="standard"
-                  onChange={event =>
-                    handleDonationEdit(item, index, setDonationBrands)
-                  }
-                />
-                <TextField
-                  id="standard-basic"
-                  label="Quantity"
-                  variant="standard"
-                  onChange={event =>
-                    handleDonationEdit(item, index, setDonationQuantities)
-                  }
-                />
-                <TextField
-                  id="standard-basic"
-                  label="Condition"
-                  variant="standard"
-                  onChange={event =>
-                    handleDonationEdit(item, index, setDonationConditions)
-                  }
-                />
-                <TextField
-                  id="standard-basic"
-                  label="Value"
-                  variant="standard"
-                  onChange={event =>
-                    handleDonationEdit(item, index, setDonationValues)
-                  }
-                />
+                <div>
+                  <TextField
+                    id="standard-basic"
+                    label="Brand/Description"
+                    variant="standard"
+                    onChange={handleDonationEdit(
+                      item,
+                      index,
+                      setDonationBrands,
+                    )}
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="Quantity"
+                    variant="standard"
+                    onChange={handleDonationEdit(
+                      item,
+                      index,
+                      setDonationQuantities,
+                    )}
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="Condition"
+                    variant="standard"
+                    onChange={handleDonationEdit(
+                      item,
+                      index,
+                      setDonationConditions,
+                    )}
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="Value"
+                    variant="standard"
+                    onChange={handleDonationEdit(
+                      item,
+                      index,
+                      setDonationValues,
+                    )}
+                  />
+                </div>
+                <div>
+                  <img
+                    src={selectedImage}
+                    style={{ maxWidth: '100%', maxHeight: '200px' }}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                    id="cameraInput"
+                    onChange={handleCapture}
+                    style={{ display: 'none' }}
+                  />
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => {
+                      const cameraInput =
+                        document.getElementById('cameraInput');
+                      if (cameraInput) {
+                        cameraInput.click();
+                      }
+                    }}
+                  >
+                    Upload Photo
+                  </Button>
+                </div>
               </CardContent>
-              <CardActions>
-                <Button size="small" onClick={handleDonationSubmit}>
-                  Donate Items
-                </Button>
-              </CardActions>
             </Card>
           ))}
+          <Grid item xs={12}>
+            <CardActions>
+              <Button
+                disabled={selectedDonatableItems.length < 1}
+                size="small"
+                variant="outlined"
+                onClick={handleDonationSubmit}
+              >
+                Donate Items
+              </Button>
+            </CardActions>
+          </Grid>
         </Grid>
       </Grid>
     </Container>

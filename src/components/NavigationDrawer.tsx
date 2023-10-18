@@ -22,7 +22,6 @@ import { Link } from 'react-router-dom';
 import '../styles/styles.css';
 import HomeIcon from '@mui/icons-material/Home';
 import { useAppContext } from './AppContext';
-import { useEffect, useRef } from 'react';
 
 const drawerWidth = 240;
 

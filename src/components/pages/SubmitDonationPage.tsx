@@ -23,10 +23,10 @@ const SubmitDonationPage: React.FC = () => {
   const { reliefMissions } = useAppContext();
 
   const mission = reliefMissions.find(mission => mission.id === Number(id));
-  const [donationBrands, setDonationBrands] = useState<any[]>([]);
-  const [donationQuantities, setDonationQuantities] = useState<any[]>([]);
-  const [donationConditions, setDonationConditions] = useState<any[]>([]);
-  const [donationValues, setDonationValues] = useState<any[]>([]);
+  const [, setDonationBrands] = useState<any[]>([]);
+  const [, setDonationQuantities] = useState<any[]>([]);
+  const [, setDonationConditions] = useState<any[]>([]);
+  const [, setDonationValues] = useState<any[]>([]);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const [selectedDonatableItems, setSelectedDonatableItems] = useState<
     Array<{ label: string }>
@@ -78,7 +78,7 @@ const SubmitDonationPage: React.FC = () => {
       index: number,
       selectedItemsListState: React.Dispatch<React.SetStateAction<any[]>>,
     ) =>
-    (event: { target: { value: any } }) => {
+    () => {
       // Rest of your logic
       handleDonationEditInternal(item, index, selectedItemsListState);
     };
@@ -92,7 +92,10 @@ const SubmitDonationPage: React.FC = () => {
     }
   };
 
-  const handleDonationSubmit = () => {};
+  const handleDonationSubmit = () => {
+    // TODO: [KAN-21] Submit donation to backend
+    console.log();
+  };
 
   return (
     <Container>
